@@ -1,0 +1,1379 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+
+    <title>AMS</title>
+
+    <!-- Scripts -->
+    <script src="http://localhost/Allocation_management_system/alocation_management_syestem/public/js/app.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+    <!--data table -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+
+    <!-- Styles -->
+    <link href="/css/app.css" rel="stylesheet">
+    
+    <link href="http://localhost/Allocation_management_system/alocation_management_syestem/public/css/app.css" rel="stylesheet">
+    
+</head>
+<body class="bg-gray-300 h-screen antialiased leading-none font-sans">
+    <div id="app">
+        <header class="bg-blue-900 py-4">
+            <div class="container mx-auto flex justify-between items-center px-6">
+                <div>
+                    <a href="http://localhost/Allocation_management_system/alocation_management_syestem/public" class="text-lg font-semibold text-gray-100 no-underline">
+                        AMS
+                    </a>
+                </div>
+                <nav class="space-x-4 text-gray-300 text-sm sm:text-base">
+                                            <span>admin</span>
+
+                        <a href="http://localhost/Allocation_management_system/alocation_management_syestem/public/logout" type="button"
+                           class="btn-block text-center text-white bg-red-600 px-3 py-2 rounded-sm"
+                           onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">Logout</a>
+                        <form id="logout-form" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/logout" method="POST" class="hidden">
+                            <input type="hidden" name="_token" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                        </form>
+                                    </nav>
+            </div>
+        </header>
+        <script src="http://localhost/Allocation_management_system/alocation_management_syestem/public/vendor/sweetalert/sweetalert.all.js"></script>
+        <main class="sm:container sm:mx-auto sm:mt-10">
+    <div class="w-full sm:px-6">
+
+                    <div class="mt-8 flex justify-between">
+            <div class="">
+                    <form method="post" enctype="multipart/form-data" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/upload" >
+                            <input type="hidden" name="_token" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                        <div class="flex bg-grey-lighter">
+                            <label class="w-40 flex flex-col items-center py-1 bg-white text-blue   tracking-wide border border-blue cursor-pointer hover:bg-blue">
+                               
+                                <span class="mt-2 text-base leading-normal">Select a file</span>
+                                <input type='file' class="hidden" name="imported_file"/>
+                            </label>
+                                <input type="submit" name="upload" class="px-3 py-1  text-white text-center transition duration-500 ease-in-out bg-green-600 " value="Upload">
+                            </div>
+                    </form>
+                </div>
+                <div class="">
+                    
+                    <form class="" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/search" id="myTable" method="GET">
+                        <input type="hidden" name="_token" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                        <input name="search" type="text" class=" text-gray-900  px-32 py-3 rounded-sm border-blue-500" placeholder="Filter by College name">
+                        <input type="submit" class="btn-block bg-green-800 py-3 px-6 text-white rounded-sm">
+                    </form>
+                </div>
+                
+                <div class="">
+                    <form method="GET" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/download" accept-charset="UTF-8" class="">
+                        <button type="Download" class="btn-block text-center text-white bg-green-500 px-6 py-3 rounded-sm hover:bg-green-600">Download</button>
+                    </form>
+                </div>
+            </div>
+
+        <div class="table  p-2">
+            <table class="w-full border table-responsive">
+                <thead>
+                    <tr class="bg-gray-50 border-b">
+                        
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                ID
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Full Name
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Sex
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Form Four index Number
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                College
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Course
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                YoS
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                MA
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Books and Stationary
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Tution Fee
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Field
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Research
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                SRF
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Total
+                            </div>
+                        </th>
+                        <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                            <div class="flex items-center justify-center">
+                                Action
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                                                        <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
+                                <td class="p-2 border-r">402</td>
+                                <td class="p-2 border-r">Elmer Pfannerstill III</td>
+                                <td class="p-2 border-r">M</td>
+                                <td class="p-2 border-r">S0601.2016 0018</td>
+                                <td class="p-2 border-r">CIVE</td>
+                                <td class="p-2 border-r">BSc. TE</td>
+                                <td class="p-2 border-r">1</td>
+                                <td class="p-2 border-r">205242</td>
+                                <td class="p-2 border-r">111801</td>
+                                <td class="p-2 border-r">578480</td>
+                                <td class="p-2 border-r">109540</td>
+                                <td class="p-2 border-r">254310</td>
+                                <td class="p-2 border-r">277</td>
+                                <td class="p-2 border-r">787914</td>
+                                <td class="flex justify-center pt-3">
+                                        <div x-data="{ showModal2: false }" :class="{'overflow-y-hidden': showModal2 }">
+                                            <a href="#"  @click="showModal2 = true" type="button" class="bg-blue-500 p-2  text-white hover:shadow-lg text-xs font-thin">Edit</a>
+                                                <div
+                                                class="fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 duration-300 overflow-y-auto"
+                                                x-show="showModal2"
+                                                x-transition:enter="transition duration-300"
+                                                x-transition:enter-start="opacity-0"
+                                                x-transition:enter-end="opacity-100"
+                                                x-transition:leave="transition duration-300"
+                                                x-transition:leave-start="opacity-100"
+                                                x-transition:leave-end="opacity-0"
+                                                >
+                                                <div class="relative sm:w-1/2 md:w-1/2 lg:w-1/2 mx-2 sm:mx-auto my-10 opacity-100">
+                                                    <div
+                                                    class="relative bg-white shadow-lg rounded-lg text-gray-900 z-20"
+                                                    @click.away="showModal2 = false"
+                                                    x-show="showModal2"
+                                                    x-transition:enter="transition transform duration-300"
+                                                    x-transition:enter-start="scale-0"
+                                                    x-transition:enter-end="scale-100"
+                                                    x-transition:leave="transition transform duration-300"
+                                                    x-transition:leave-start="scale-100"
+                                                    x-transition:leave-end="scale-0"
+                                                    >
+                                                    <header class="flex flex-col justify-center items-center pt-3">
+                                                        <div class="flex justify-center">
+                                                                <h1 class="text-lg uppercase text-gray-500">Edit Record</h1>
+                                                        </div>
+                                                    </header>
+                                                    <main class="flex h-screen items-center justify-center">
+                                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/edit/4318" accept-charset="UTF-8"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                                <input type="hidden" name="_token" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mx-4">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Full name">Full Name</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="full_name" value="Elmer Pfannerstill III">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Collage">Collage</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="collage" value="CIVE">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Index number">Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="index_no" value="402">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Gender">Gender</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="sex" value="M">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Form four index number">Form Four Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="registration_no" value="S0601.2016 0018">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Course">Course</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="course" value="BSc. TE">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Year of study">Year Of Study</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="yos" type="text" name="yos" value="1">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="MA">MA</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="ma" type="text" name="ma" value="205242">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Books and stationary">Books And Stationary</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="books_stationary" type="text" name="books_stationary" value="111801">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Tution Fee">Tution Fee</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="tution_free" value="578480">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Field">Field</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="field" value="109540">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Research">Research</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="research" value="254310">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="SRF">SRF</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="srf" value="277">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Total">Total</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="total" value="787914">
+                                                                </div>
+                                                            </div>
+                                                            <div class='flex items-center justify-center  md:gap-8 gap-8 pt-2 pb-2'>
+                                                                <input class="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2" type="submit" value="Submit">                                                       
+                                                            </div>
+                                                        </form>
+                                                    </main>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/delete/4318" accept-charset="UTF-8" class="float-right"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button type="Delete" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Remove</button>
+                                        </form>
+                                </td>
+                            </tr>
+                                                    <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
+                                <td class="p-2 border-r">397</td>
+                                <td class="p-2 border-r">Joanie Hettinger</td>
+                                <td class="p-2 border-r">M</td>
+                                <td class="p-2 border-r">S0601.2016 3166</td>
+                                <td class="p-2 border-r">CIVE</td>
+                                <td class="p-2 border-r">BSc. TE</td>
+                                <td class="p-2 border-r">4</td>
+                                <td class="p-2 border-r">225993</td>
+                                <td class="p-2 border-r">132528</td>
+                                <td class="p-2 border-r">597621</td>
+                                <td class="p-2 border-r">209146</td>
+                                <td class="p-2 border-r">264468</td>
+                                <td class="p-2 border-r">303</td>
+                                <td class="p-2 border-r">874364</td>
+                                <td class="flex justify-center pt-3">
+                                        <div x-data="{ showModal2: false }" :class="{'overflow-y-hidden': showModal2 }">
+                                            <a href="#"  @click="showModal2 = true" type="button" class="bg-blue-500 p-2  text-white hover:shadow-lg text-xs font-thin">Edit</a>
+                                                <div
+                                                class="fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 duration-300 overflow-y-auto"
+                                                x-show="showModal2"
+                                                x-transition:enter="transition duration-300"
+                                                x-transition:enter-start="opacity-0"
+                                                x-transition:enter-end="opacity-100"
+                                                x-transition:leave="transition duration-300"
+                                                x-transition:leave-start="opacity-100"
+                                                x-transition:leave-end="opacity-0"
+                                                >
+                                                <div class="relative sm:w-1/2 md:w-1/2 lg:w-1/2 mx-2 sm:mx-auto my-10 opacity-100">
+                                                    <div
+                                                    class="relative bg-white shadow-lg rounded-lg text-gray-900 z-20"
+                                                    @click.away="showModal2 = false"
+                                                    x-show="showModal2"
+                                                    x-transition:enter="transition transform duration-300"
+                                                    x-transition:enter-start="scale-0"
+                                                    x-transition:enter-end="scale-100"
+                                                    x-transition:leave="transition transform duration-300"
+                                                    x-transition:leave-start="scale-100"
+                                                    x-transition:leave-end="scale-0"
+                                                    >
+                                                    <header class="flex flex-col justify-center items-center pt-3">
+                                                        <div class="flex justify-center">
+                                                                <h1 class="text-lg uppercase text-gray-500">Edit Record</h1>
+                                                        </div>
+                                                    </header>
+                                                    <main class="flex h-screen items-center justify-center">
+                                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/edit/4319" accept-charset="UTF-8"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                                <input type="hidden" name="_token" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mx-4">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Full name">Full Name</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="full_name" value="Joanie Hettinger">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Collage">Collage</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="collage" value="CIVE">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Index number">Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="index_no" value="397">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Gender">Gender</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="sex" value="M">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Form four index number">Form Four Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="registration_no" value="S0601.2016 3166">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Course">Course</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="course" value="BSc. TE">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Year of study">Year Of Study</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="yos" type="text" name="yos" value="4">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="MA">MA</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="ma" type="text" name="ma" value="225993">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Books and stationary">Books And Stationary</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="books_stationary" type="text" name="books_stationary" value="132528">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Tution Fee">Tution Fee</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="tution_free" value="597621">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Field">Field</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="field" value="209146">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Research">Research</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="research" value="264468">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="SRF">SRF</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="srf" value="303">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Total">Total</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="total" value="874364">
+                                                                </div>
+                                                            </div>
+                                                            <div class='flex items-center justify-center  md:gap-8 gap-8 pt-2 pb-2'>
+                                                                <input class="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2" type="submit" value="Submit">                                                       
+                                                            </div>
+                                                        </form>
+                                                    </main>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/delete/4319" accept-charset="UTF-8" class="float-right"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button type="Delete" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Remove</button>
+                                        </form>
+                                </td>
+                            </tr>
+                                                    <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
+                                <td class="p-2 border-r">312</td>
+                                <td class="p-2 border-r">Eula Olson</td>
+                                <td class="p-2 border-r">M</td>
+                                <td class="p-2 border-r">S0601.2016 2514</td>
+                                <td class="p-2 border-r">CIVE</td>
+                                <td class="p-2 border-r">BSc. TE</td>
+                                <td class="p-2 border-r">3</td>
+                                <td class="p-2 border-r">206458</td>
+                                <td class="p-2 border-r">143399</td>
+                                <td class="p-2 border-r">567862</td>
+                                <td class="p-2 border-r">131067</td>
+                                <td class="p-2 border-r">299865</td>
+                                <td class="p-2 border-r">427</td>
+                                <td class="p-2 border-r">755436</td>
+                                <td class="flex justify-center pt-3">
+                                        <div x-data="{ showModal2: false }" :class="{'overflow-y-hidden': showModal2 }">
+                                            <a href="#"  @click="showModal2 = true" type="button" class="bg-blue-500 p-2  text-white hover:shadow-lg text-xs font-thin">Edit</a>
+                                                <div
+                                                class="fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 duration-300 overflow-y-auto"
+                                                x-show="showModal2"
+                                                x-transition:enter="transition duration-300"
+                                                x-transition:enter-start="opacity-0"
+                                                x-transition:enter-end="opacity-100"
+                                                x-transition:leave="transition duration-300"
+                                                x-transition:leave-start="opacity-100"
+                                                x-transition:leave-end="opacity-0"
+                                                >
+                                                <div class="relative sm:w-1/2 md:w-1/2 lg:w-1/2 mx-2 sm:mx-auto my-10 opacity-100">
+                                                    <div
+                                                    class="relative bg-white shadow-lg rounded-lg text-gray-900 z-20"
+                                                    @click.away="showModal2 = false"
+                                                    x-show="showModal2"
+                                                    x-transition:enter="transition transform duration-300"
+                                                    x-transition:enter-start="scale-0"
+                                                    x-transition:enter-end="scale-100"
+                                                    x-transition:leave="transition transform duration-300"
+                                                    x-transition:leave-start="scale-100"
+                                                    x-transition:leave-end="scale-0"
+                                                    >
+                                                    <header class="flex flex-col justify-center items-center pt-3">
+                                                        <div class="flex justify-center">
+                                                                <h1 class="text-lg uppercase text-gray-500">Edit Record</h1>
+                                                        </div>
+                                                    </header>
+                                                    <main class="flex h-screen items-center justify-center">
+                                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/edit/4320" accept-charset="UTF-8"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                                <input type="hidden" name="_token" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mx-4">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Full name">Full Name</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="full_name" value="Eula Olson">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Collage">Collage</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="collage" value="CIVE">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Index number">Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="index_no" value="312">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Gender">Gender</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="sex" value="M">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Form four index number">Form Four Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="registration_no" value="S0601.2016 2514">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Course">Course</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="course" value="BSc. TE">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Year of study">Year Of Study</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="yos" type="text" name="yos" value="3">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="MA">MA</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="ma" type="text" name="ma" value="206458">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Books and stationary">Books And Stationary</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="books_stationary" type="text" name="books_stationary" value="143399">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Tution Fee">Tution Fee</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="tution_free" value="567862">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Field">Field</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="field" value="131067">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Research">Research</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="research" value="299865">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="SRF">SRF</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="srf" value="427">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Total">Total</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="total" value="755436">
+                                                                </div>
+                                                            </div>
+                                                            <div class='flex items-center justify-center  md:gap-8 gap-8 pt-2 pb-2'>
+                                                                <input class="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2" type="submit" value="Submit">                                                       
+                                                            </div>
+                                                        </form>
+                                                    </main>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/delete/4320" accept-charset="UTF-8" class="float-right"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button type="Delete" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Remove</button>
+                                        </form>
+                                </td>
+                            </tr>
+                                                    <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
+                                <td class="p-2 border-r">161</td>
+                                <td class="p-2 border-r">Prof. Angelo Daniel Jr.</td>
+                                <td class="p-2 border-r">M</td>
+                                <td class="p-2 border-r">S0601.2016 4332</td>
+                                <td class="p-2 border-r">COES</td>
+                                <td class="p-2 border-r">BSc. REE</td>
+                                <td class="p-2 border-r">2</td>
+                                <td class="p-2 border-r">137925</td>
+                                <td class="p-2 border-r">119618</td>
+                                <td class="p-2 border-r">567688</td>
+                                <td class="p-2 border-r">267497</td>
+                                <td class="p-2 border-r">186088</td>
+                                <td class="p-2 border-r">255</td>
+                                <td class="p-2 border-r">759926</td>
+                                <td class="flex justify-center pt-3">
+                                        <div x-data="{ showModal2: false }" :class="{'overflow-y-hidden': showModal2 }">
+                                            <a href="#"  @click="showModal2 = true" type="button" class="bg-blue-500 p-2  text-white hover:shadow-lg text-xs font-thin">Edit</a>
+                                                <div
+                                                class="fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 duration-300 overflow-y-auto"
+                                                x-show="showModal2"
+                                                x-transition:enter="transition duration-300"
+                                                x-transition:enter-start="opacity-0"
+                                                x-transition:enter-end="opacity-100"
+                                                x-transition:leave="transition duration-300"
+                                                x-transition:leave-start="opacity-100"
+                                                x-transition:leave-end="opacity-0"
+                                                >
+                                                <div class="relative sm:w-1/2 md:w-1/2 lg:w-1/2 mx-2 sm:mx-auto my-10 opacity-100">
+                                                    <div
+                                                    class="relative bg-white shadow-lg rounded-lg text-gray-900 z-20"
+                                                    @click.away="showModal2 = false"
+                                                    x-show="showModal2"
+                                                    x-transition:enter="transition transform duration-300"
+                                                    x-transition:enter-start="scale-0"
+                                                    x-transition:enter-end="scale-100"
+                                                    x-transition:leave="transition transform duration-300"
+                                                    x-transition:leave-start="scale-100"
+                                                    x-transition:leave-end="scale-0"
+                                                    >
+                                                    <header class="flex flex-col justify-center items-center pt-3">
+                                                        <div class="flex justify-center">
+                                                                <h1 class="text-lg uppercase text-gray-500">Edit Record</h1>
+                                                        </div>
+                                                    </header>
+                                                    <main class="flex h-screen items-center justify-center">
+                                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/edit/4321" accept-charset="UTF-8"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                                <input type="hidden" name="_token" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mx-4">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Full name">Full Name</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="full_name" value="Prof. Angelo Daniel Jr.">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Collage">Collage</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="collage" value="COES">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Index number">Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="index_no" value="161">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Gender">Gender</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="sex" value="M">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Form four index number">Form Four Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="registration_no" value="S0601.2016 4332">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Course">Course</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="course" value="BSc. REE">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Year of study">Year Of Study</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="yos" type="text" name="yos" value="2">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="MA">MA</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="ma" type="text" name="ma" value="137925">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Books and stationary">Books And Stationary</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="books_stationary" type="text" name="books_stationary" value="119618">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Tution Fee">Tution Fee</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="tution_free" value="567688">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Field">Field</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="field" value="267497">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Research">Research</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="research" value="186088">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="SRF">SRF</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="srf" value="255">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Total">Total</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="total" value="759926">
+                                                                </div>
+                                                            </div>
+                                                            <div class='flex items-center justify-center  md:gap-8 gap-8 pt-2 pb-2'>
+                                                                <input class="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2" type="submit" value="Submit">                                                       
+                                                            </div>
+                                                        </form>
+                                                    </main>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/delete/4321" accept-charset="UTF-8" class="float-right"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button type="Delete" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Remove</button>
+                                        </form>
+                                </td>
+                            </tr>
+                                                    <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
+                                <td class="p-2 border-r">455</td>
+                                <td class="p-2 border-r">Rosemary Bogisich</td>
+                                <td class="p-2 border-r">M</td>
+                                <td class="p-2 border-r">S0601.2016 6897</td>
+                                <td class="p-2 border-r">COES</td>
+                                <td class="p-2 border-r">BSc. REE</td>
+                                <td class="p-2 border-r">3</td>
+                                <td class="p-2 border-r">147618</td>
+                                <td class="p-2 border-r">129352</td>
+                                <td class="p-2 border-r">553107</td>
+                                <td class="p-2 border-r">256692</td>
+                                <td class="p-2 border-r">282363</td>
+                                <td class="p-2 border-r">242</td>
+                                <td class="p-2 border-r">730393</td>
+                                <td class="flex justify-center pt-3">
+                                        <div x-data="{ showModal2: false }" :class="{'overflow-y-hidden': showModal2 }">
+                                            <a href="#"  @click="showModal2 = true" type="button" class="bg-blue-500 p-2  text-white hover:shadow-lg text-xs font-thin">Edit</a>
+                                                <div
+                                                class="fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 duration-300 overflow-y-auto"
+                                                x-show="showModal2"
+                                                x-transition:enter="transition duration-300"
+                                                x-transition:enter-start="opacity-0"
+                                                x-transition:enter-end="opacity-100"
+                                                x-transition:leave="transition duration-300"
+                                                x-transition:leave-start="opacity-100"
+                                                x-transition:leave-end="opacity-0"
+                                                >
+                                                <div class="relative sm:w-1/2 md:w-1/2 lg:w-1/2 mx-2 sm:mx-auto my-10 opacity-100">
+                                                    <div
+                                                    class="relative bg-white shadow-lg rounded-lg text-gray-900 z-20"
+                                                    @click.away="showModal2 = false"
+                                                    x-show="showModal2"
+                                                    x-transition:enter="transition transform duration-300"
+                                                    x-transition:enter-start="scale-0"
+                                                    x-transition:enter-end="scale-100"
+                                                    x-transition:leave="transition transform duration-300"
+                                                    x-transition:leave-start="scale-100"
+                                                    x-transition:leave-end="scale-0"
+                                                    >
+                                                    <header class="flex flex-col justify-center items-center pt-3">
+                                                        <div class="flex justify-center">
+                                                                <h1 class="text-lg uppercase text-gray-500">Edit Record</h1>
+                                                        </div>
+                                                    </header>
+                                                    <main class="flex h-screen items-center justify-center">
+                                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/edit/4322" accept-charset="UTF-8"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                                <input type="hidden" name="_token" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mx-4">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Full name">Full Name</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="full_name" value="Rosemary Bogisich">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Collage">Collage</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="collage" value="COES">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Index number">Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="index_no" value="455">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Gender">Gender</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="sex" value="M">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Form four index number">Form Four Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="registration_no" value="S0601.2016 6897">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Course">Course</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="course" value="BSc. REE">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Year of study">Year Of Study</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="yos" type="text" name="yos" value="3">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="MA">MA</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="ma" type="text" name="ma" value="147618">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Books and stationary">Books And Stationary</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="books_stationary" type="text" name="books_stationary" value="129352">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Tution Fee">Tution Fee</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="tution_free" value="553107">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Field">Field</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="field" value="256692">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Research">Research</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="research" value="282363">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="SRF">SRF</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="srf" value="242">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Total">Total</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="total" value="730393">
+                                                                </div>
+                                                            </div>
+                                                            <div class='flex items-center justify-center  md:gap-8 gap-8 pt-2 pb-2'>
+                                                                <input class="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2" type="submit" value="Submit">                                                       
+                                                            </div>
+                                                        </form>
+                                                    </main>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/delete/4322" accept-charset="UTF-8" class="float-right"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button type="Delete" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Remove</button>
+                                        </form>
+                                </td>
+                            </tr>
+                                                    <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
+                                <td class="p-2 border-r">250</td>
+                                <td class="p-2 border-r">Alfredo Donnelly</td>
+                                <td class="p-2 border-r">M</td>
+                                <td class="p-2 border-r">S0601.2016 2222</td>
+                                <td class="p-2 border-r">COES</td>
+                                <td class="p-2 border-r">BSc. REE</td>
+                                <td class="p-2 border-r">1</td>
+                                <td class="p-2 border-r">117597</td>
+                                <td class="p-2 border-r">127467</td>
+                                <td class="p-2 border-r">580306</td>
+                                <td class="p-2 border-r">279705</td>
+                                <td class="p-2 border-r">106528</td>
+                                <td class="p-2 border-r">268</td>
+                                <td class="p-2 border-r">855220</td>
+                                <td class="flex justify-center pt-3">
+                                        <div x-data="{ showModal2: false }" :class="{'overflow-y-hidden': showModal2 }">
+                                            <a href="#"  @click="showModal2 = true" type="button" class="bg-blue-500 p-2  text-white hover:shadow-lg text-xs font-thin">Edit</a>
+                                                <div
+                                                class="fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 duration-300 overflow-y-auto"
+                                                x-show="showModal2"
+                                                x-transition:enter="transition duration-300"
+                                                x-transition:enter-start="opacity-0"
+                                                x-transition:enter-end="opacity-100"
+                                                x-transition:leave="transition duration-300"
+                                                x-transition:leave-start="opacity-100"
+                                                x-transition:leave-end="opacity-0"
+                                                >
+                                                <div class="relative sm:w-1/2 md:w-1/2 lg:w-1/2 mx-2 sm:mx-auto my-10 opacity-100">
+                                                    <div
+                                                    class="relative bg-white shadow-lg rounded-lg text-gray-900 z-20"
+                                                    @click.away="showModal2 = false"
+                                                    x-show="showModal2"
+                                                    x-transition:enter="transition transform duration-300"
+                                                    x-transition:enter-start="scale-0"
+                                                    x-transition:enter-end="scale-100"
+                                                    x-transition:leave="transition transform duration-300"
+                                                    x-transition:leave-start="scale-100"
+                                                    x-transition:leave-end="scale-0"
+                                                    >
+                                                    <header class="flex flex-col justify-center items-center pt-3">
+                                                        <div class="flex justify-center">
+                                                                <h1 class="text-lg uppercase text-gray-500">Edit Record</h1>
+                                                        </div>
+                                                    </header>
+                                                    <main class="flex h-screen items-center justify-center">
+                                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/edit/4323" accept-charset="UTF-8"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                                <input type="hidden" name="_token" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mx-4">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Full name">Full Name</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="full_name" value="Alfredo Donnelly">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Collage">Collage</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="collage" value="COES">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Index number">Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="index_no" value="250">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Gender">Gender</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="sex" value="M">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Form four index number">Form Four Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="registration_no" value="S0601.2016 2222">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Course">Course</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="course" value="BSc. REE">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Year of study">Year Of Study</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="yos" type="text" name="yos" value="1">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="MA">MA</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="ma" type="text" name="ma" value="117597">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Books and stationary">Books And Stationary</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="books_stationary" type="text" name="books_stationary" value="127467">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Tution Fee">Tution Fee</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="tution_free" value="580306">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Field">Field</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="field" value="279705">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Research">Research</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="research" value="106528">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="SRF">SRF</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="srf" value="268">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Total">Total</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="total" value="855220">
+                                                                </div>
+                                                            </div>
+                                                            <div class='flex items-center justify-center  md:gap-8 gap-8 pt-2 pb-2'>
+                                                                <input class="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2" type="submit" value="Submit">                                                       
+                                                            </div>
+                                                        </form>
+                                                    </main>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/delete/4323" accept-charset="UTF-8" class="float-right"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button type="Delete" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Remove</button>
+                                        </form>
+                                </td>
+                            </tr>
+                                                    <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
+                                <td class="p-2 border-r">279</td>
+                                <td class="p-2 border-r">Blanca Orn</td>
+                                <td class="p-2 border-r">M</td>
+                                <td class="p-2 border-r">S0601.2016 6063</td>
+                                <td class="p-2 border-r">COED</td>
+                                <td class="p-2 border-r">BSc. BED</td>
+                                <td class="p-2 border-r">2</td>
+                                <td class="p-2 border-r">124044</td>
+                                <td class="p-2 border-r">147287</td>
+                                <td class="p-2 border-r">526590</td>
+                                <td class="p-2 border-r">189805</td>
+                                <td class="p-2 border-r">197051</td>
+                                <td class="p-2 border-r">388</td>
+                                <td class="p-2 border-r">880808</td>
+                                <td class="flex justify-center pt-3">
+                                        <div x-data="{ showModal2: false }" :class="{'overflow-y-hidden': showModal2 }">
+                                            <a href="#"  @click="showModal2 = true" type="button" class="bg-blue-500 p-2  text-white hover:shadow-lg text-xs font-thin">Edit</a>
+                                                <div
+                                                class="fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 duration-300 overflow-y-auto"
+                                                x-show="showModal2"
+                                                x-transition:enter="transition duration-300"
+                                                x-transition:enter-start="opacity-0"
+                                                x-transition:enter-end="opacity-100"
+                                                x-transition:leave="transition duration-300"
+                                                x-transition:leave-start="opacity-100"
+                                                x-transition:leave-end="opacity-0"
+                                                >
+                                                <div class="relative sm:w-1/2 md:w-1/2 lg:w-1/2 mx-2 sm:mx-auto my-10 opacity-100">
+                                                    <div
+                                                    class="relative bg-white shadow-lg rounded-lg text-gray-900 z-20"
+                                                    @click.away="showModal2 = false"
+                                                    x-show="showModal2"
+                                                    x-transition:enter="transition transform duration-300"
+                                                    x-transition:enter-start="scale-0"
+                                                    x-transition:enter-end="scale-100"
+                                                    x-transition:leave="transition transform duration-300"
+                                                    x-transition:leave-start="scale-100"
+                                                    x-transition:leave-end="scale-0"
+                                                    >
+                                                    <header class="flex flex-col justify-center items-center pt-3">
+                                                        <div class="flex justify-center">
+                                                                <h1 class="text-lg uppercase text-gray-500">Edit Record</h1>
+                                                        </div>
+                                                    </header>
+                                                    <main class="flex h-screen items-center justify-center">
+                                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/edit/4324" accept-charset="UTF-8"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                                <input type="hidden" name="_token" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mx-4">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Full name">Full Name</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="full_name" value="Blanca Orn">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Collage">Collage</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="collage" value="COED">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Index number">Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="index_no" value="279">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Gender">Gender</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="sex" value="M">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Form four index number">Form Four Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="registration_no" value="S0601.2016 6063">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Course">Course</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="course" value="BSc. BED">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Year of study">Year Of Study</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="yos" type="text" name="yos" value="2">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="MA">MA</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="ma" type="text" name="ma" value="124044">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Books and stationary">Books And Stationary</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="books_stationary" type="text" name="books_stationary" value="147287">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Tution Fee">Tution Fee</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="tution_free" value="526590">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Field">Field</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="field" value="189805">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Research">Research</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="research" value="197051">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="SRF">SRF</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="srf" value="388">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Total">Total</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="total" value="880808">
+                                                                </div>
+                                                            </div>
+                                                            <div class='flex items-center justify-center  md:gap-8 gap-8 pt-2 pb-2'>
+                                                                <input class="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2" type="submit" value="Submit">                                                       
+                                                            </div>
+                                                        </form>
+                                                    </main>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/delete/4324" accept-charset="UTF-8" class="float-right"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button type="Delete" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Remove</button>
+                                        </form>
+                                </td>
+                            </tr>
+                                                    <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
+                                <td class="p-2 border-r">344</td>
+                                <td class="p-2 border-r">Prof. Rafaela Heaney</td>
+                                <td class="p-2 border-r">M</td>
+                                <td class="p-2 border-r">S0601.2016 2082</td>
+                                <td class="p-2 border-r">COED</td>
+                                <td class="p-2 border-r">BSc. BED</td>
+                                <td class="p-2 border-r">4</td>
+                                <td class="p-2 border-r">180432</td>
+                                <td class="p-2 border-r">115607</td>
+                                <td class="p-2 border-r">502209</td>
+                                <td class="p-2 border-r">251900</td>
+                                <td class="p-2 border-r">113302</td>
+                                <td class="p-2 border-r">346</td>
+                                <td class="p-2 border-r">817868</td>
+                                <td class="flex justify-center pt-3">
+                                        <div x-data="{ showModal2: false }" :class="{'overflow-y-hidden': showModal2 }">
+                                            <a href="#"  @click="showModal2 = true" type="button" class="bg-blue-500 p-2  text-white hover:shadow-lg text-xs font-thin">Edit</a>
+                                                <div
+                                                class="fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 duration-300 overflow-y-auto"
+                                                x-show="showModal2"
+                                                x-transition:enter="transition duration-300"
+                                                x-transition:enter-start="opacity-0"
+                                                x-transition:enter-end="opacity-100"
+                                                x-transition:leave="transition duration-300"
+                                                x-transition:leave-start="opacity-100"
+                                                x-transition:leave-end="opacity-0"
+                                                >
+                                                <div class="relative sm:w-1/2 md:w-1/2 lg:w-1/2 mx-2 sm:mx-auto my-10 opacity-100">
+                                                    <div
+                                                    class="relative bg-white shadow-lg rounded-lg text-gray-900 z-20"
+                                                    @click.away="showModal2 = false"
+                                                    x-show="showModal2"
+                                                    x-transition:enter="transition transform duration-300"
+                                                    x-transition:enter-start="scale-0"
+                                                    x-transition:enter-end="scale-100"
+                                                    x-transition:leave="transition transform duration-300"
+                                                    x-transition:leave-start="scale-100"
+                                                    x-transition:leave-end="scale-0"
+                                                    >
+                                                    <header class="flex flex-col justify-center items-center pt-3">
+                                                        <div class="flex justify-center">
+                                                                <h1 class="text-lg uppercase text-gray-500">Edit Record</h1>
+                                                        </div>
+                                                    </header>
+                                                    <main class="flex h-screen items-center justify-center">
+                                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/edit/4325" accept-charset="UTF-8"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                                <input type="hidden" name="_token" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mx-4">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Full name">Full Name</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="full_name" value="Prof. Rafaela Heaney">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Collage">Collage</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="collage" value="COED">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Index number">Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="index_no" value="344">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Gender">Gender</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="sex" value="M">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Form four index number">Form Four Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="registration_no" value="S0601.2016 2082">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Course">Course</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="course" value="BSc. BED">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Year of study">Year Of Study</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="yos" type="text" name="yos" value="4">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="MA">MA</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="ma" type="text" name="ma" value="180432">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Books and stationary">Books And Stationary</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="books_stationary" type="text" name="books_stationary" value="115607">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Tution Fee">Tution Fee</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="tution_free" value="502209">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Field">Field</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="field" value="251900">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Research">Research</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="research" value="113302">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="SRF">SRF</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="srf" value="346">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Total">Total</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="total" value="817868">
+                                                                </div>
+                                                            </div>
+                                                            <div class='flex items-center justify-center  md:gap-8 gap-8 pt-2 pb-2'>
+                                                                <input class="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2" type="submit" value="Submit">                                                       
+                                                            </div>
+                                                        </form>
+                                                    </main>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/delete/4325" accept-charset="UTF-8" class="float-right"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button type="Delete" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Remove</button>
+                                        </form>
+                                </td>
+                            </tr>
+                                                    <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
+                                <td class="p-2 border-r">271</td>
+                                <td class="p-2 border-r">Dr. Aryanna Crooks I</td>
+                                <td class="p-2 border-r">M</td>
+                                <td class="p-2 border-r">S0601.2016 5258</td>
+                                <td class="p-2 border-r">COED</td>
+                                <td class="p-2 border-r">BSc. BED</td>
+                                <td class="p-2 border-r">4</td>
+                                <td class="p-2 border-r">202401</td>
+                                <td class="p-2 border-r">92641</td>
+                                <td class="p-2 border-r">532508</td>
+                                <td class="p-2 border-r">194882</td>
+                                <td class="p-2 border-r">270902</td>
+                                <td class="p-2 border-r">241</td>
+                                <td class="p-2 border-r">873306</td>
+                                <td class="flex justify-center pt-3">
+                                        <div x-data="{ showModal2: false }" :class="{'overflow-y-hidden': showModal2 }">
+                                            <a href="#"  @click="showModal2 = true" type="button" class="bg-blue-500 p-2  text-white hover:shadow-lg text-xs font-thin">Edit</a>
+                                                <div
+                                                class="fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 duration-300 overflow-y-auto"
+                                                x-show="showModal2"
+                                                x-transition:enter="transition duration-300"
+                                                x-transition:enter-start="opacity-0"
+                                                x-transition:enter-end="opacity-100"
+                                                x-transition:leave="transition duration-300"
+                                                x-transition:leave-start="opacity-100"
+                                                x-transition:leave-end="opacity-0"
+                                                >
+                                                <div class="relative sm:w-1/2 md:w-1/2 lg:w-1/2 mx-2 sm:mx-auto my-10 opacity-100">
+                                                    <div
+                                                    class="relative bg-white shadow-lg rounded-lg text-gray-900 z-20"
+                                                    @click.away="showModal2 = false"
+                                                    x-show="showModal2"
+                                                    x-transition:enter="transition transform duration-300"
+                                                    x-transition:enter-start="scale-0"
+                                                    x-transition:enter-end="scale-100"
+                                                    x-transition:leave="transition transform duration-300"
+                                                    x-transition:leave-start="scale-100"
+                                                    x-transition:leave-end="scale-0"
+                                                    >
+                                                    <header class="flex flex-col justify-center items-center pt-3">
+                                                        <div class="flex justify-center">
+                                                                <h1 class="text-lg uppercase text-gray-500">Edit Record</h1>
+                                                        </div>
+                                                    </header>
+                                                    <main class="flex h-screen items-center justify-center">
+                                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/edit/4326" accept-charset="UTF-8"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                                <input type="hidden" name="_token" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mx-4">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Full name">Full Name</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="full_name" value="Dr. Aryanna Crooks I">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Collage">Collage</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="collage" value="COED">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Index number">Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="index_no" value="271">
+                                                                </div>
+                                                            </div>
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Gender">Gender</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="sex" value="M">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Form four index number">Form Four Index Number</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="registration_no" value="S0601.2016 5258">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Course">Course</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="course" value="BSc. BED">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Year of study">Year Of Study</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="yos" type="text" name="yos" value="4">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="MA">MA</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="ma" type="text" name="ma" value="202401">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Books and stationary">Books And Stationary</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" id="books_stationary" type="text" name="books_stationary" value="92641">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Tution Fee">Tution Fee</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="tution_free" value="532508">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Field">Field</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="field" value="194882">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Research">Research</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="research" value="270902">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 mt-5 mx-3">
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="SRF">SRF</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="srf" value="241">
+                                                                </div>
+                                                                <div class="grid grid-cols-1">
+                                                                <label for="Total">Total</label>
+                                                                <input class="py-2 px-3 rounded-lg border-2 border-purple-300 mt-1 focus:outline-none focus:ring-2 focus:border-transparent" type="text" name="total" value="873306">
+                                                                </div>
+                                                            </div>
+                                                            <div class='flex items-center justify-center  md:gap-8 gap-8 pt-2 pb-2'>
+                                                                <input class="w-auto bg-purple-500 hover:bg-purple-700 rounded-lg shadow-xl font-medium text-white px-4 py-2" type="submit" value="Submit">                                                       
+                                                            </div>
+                                                        </form>
+                                                    </main>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <form method="POST" action="http://localhost/Allocation_management_system/alocation_management_syestem/public/home/delete/4326" accept-charset="UTF-8" class="float-right"><input name="_token" type="hidden" value="xG8KrWpjw8lT8HyeaRvGAtwTEwBSepZRhQQ8E17O">
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <button type="Delete" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Remove</button>
+                                        </form>
+                                </td>
+                            </tr>
+                                        </tbody>            
+            </table>
+        <nav class="mt-5">
+                
+        </nav>
+    </div>
+    </div>
+</main>
+    
+    </div>
+</body>
+<script>
+    $(document).ready( function () {
+        $('#myTable').DataTable();
+    } );
+</script>
+</html>
+
